@@ -1,0 +1,21 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Sinso\AppRoutes\:
+    resource: '../Classes/*'
+
+  # Cache service for app routes configuration
+  cache.app_routes:
+    class: TYPO3\CMS\Core\Cache\Frontend\VariableFrontend
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['app_routes']
+
+  lowlevel.configuration.module.provider.app_routes:
+    class: 'Sinso\AppRoutes\ConfigurationModuleProvider\AppRoutesProvider'
+    tags:
+      - name: 'lowlevel.configuration.module.provider'
+        identifier: 'appRoutesConfiguration'
+        label: 'App Routes'
